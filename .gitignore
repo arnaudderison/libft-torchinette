@@ -1,0 +1,6 @@
+// Object file
+obj/
+*.o
+
+// lib
+*.a
