@@ -6,7 +6,7 @@
 /*   By: aderison <aderison@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 12:07:19 by aderison          #+#    #+#             */
-/*   Updated: 2024/11/15 13:30:00 by aderison         ###   ########.fr       */
+/*   Updated: 2024/11/15 21:18:38 by aderison         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ extern const char *g_current_test;
 
 # define TEST(name, code) do { \
     g_current_test = name; \
-    printf("%sTesting %s...%s\n", BLUE, name, RESET); \
+    printf("%sTesting %s %s ", BLUE, name, RESET); \
     if (sigsetjmp(g_jump_buffer, 1) == 0) { \
         code; \
-        printf("%s[OK]%s %s\n", GREEN, RESET, name); \
+        printf("%s[OK]%s\n ", GREEN, RESET); \
         g_results.passed++; \
     } \
 } while(0)
@@ -57,7 +57,6 @@ extern const char *g_current_test;
 // Prototypes
 int     setup_signal_handlers(void);
 void    test_part1(void);
-void    test_part2(void);
 void    test_atoi(void);
 void    test_bzero(void);
 void    print_results(void);
