@@ -13,7 +13,10 @@ SRCS = main.c \
        globals.c \
        test_part1.c \
        test_part2.c \
-	   test_atoi.c
+	   test_atoi.c \
+	   test_bzero.c \
+	   test_calloc.c \
+	   test_strdup.c
 
 SRCS := $(addprefix $(SRC_DIR)/, $(SRCS))
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

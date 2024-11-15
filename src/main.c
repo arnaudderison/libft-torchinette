@@ -20,6 +20,9 @@ int main(int argc, char **argv)
     }
 
     test_atoi();
+    test_bzero();
+    test_calloc();
+    test_strdup();
     test_part1();
     test_part2();
     print_results();
