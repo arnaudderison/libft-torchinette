@@ -3,4 +3,5 @@ obj/
 *.o
 
 // lib
+libft/
 *.a
