@@ -398,7 +398,7 @@ static void test_strlcpy(void)
 
         // Test 1: Copie complète avec un tampon suffisamment grand
         size_t result1 = ft_strlcpy(str1, "Hello", 50);
-        size_t result2 = strlcpy(str2, "Hello", 50);
+        size_t result2 = ft_test_strlcpy(str2, "Hello", 50);
         if (result1 != result2) {
             printf("\nFail: ft_strlcpy('Hello', 50)\n");
             printf("\nExpected: %zu\n", result2);
@@ -408,7 +408,7 @@ static void test_strlcpy(void)
         
         // Test 2: Copie d'une chaîne vide
         result1 = ft_strlcpy(str1, "", 50);
-        result2 = strlcpy(str2, "", 50);
+        result2 = ft_test_strlcpy(str2, "", 50);
         if (result1 != result2) {
             printf("\nFail: ft_strlcpy('', 50)\n");
             printf("\nExpected: %zu\n", result2);
@@ -418,7 +418,7 @@ static void test_strlcpy(void)
 
         // Test 3: Copie avec une taille de tampon plus petite que la chaîne
         result1 = ft_strlcpy(str1, "Hello", 3);
-        result2 = strlcpy(str2, "Hello", 3);
+        result2 = ft_test_strlcpy(str2, "Hello", 3);
         if (result1 != result2) {
             printf("\nFail: ft_strlcpy('Hello', 3)\n");
             printf("\nExpected: %zu\n", result2);
@@ -428,7 +428,7 @@ static void test_strlcpy(void)
 
         // Test 4: Vérification du contenu copié avec un tampon plus grand
         ft_strlcpy(str1, "Hello", 50);
-        strlcpy(str2, "Hello", 50);
+        ft_test_strlcpy(str2, "Hello", 50);
         if (strcmp(str1, str2) != 0) {
             printf("\nFail: ft_strlcpy content mismatch\n");
             printf("\nExpected: '%s'\n", str2);
@@ -438,7 +438,7 @@ static void test_strlcpy(void)
 
         // Test 5: Copie avec un tampon exactement de la taille de la chaîne + 1
         ft_strlcpy(str1, "Hello", 6);
-        strlcpy(str2, "Hello", 6);
+        ft_test_strlcpy(str2, "Hello", 6);
         if (strcmp(str1, str2) != 0) {
             printf("\nFail: ft_strlcpy content mismatch for size 6\n");
             printf("\nExpected: '%s'\n", str2);
@@ -448,7 +448,7 @@ static void test_strlcpy(void)
 
         // Test 6: Test avec un tampon plus petit que la chaîne mais avec l'allocation correcte
         ft_strlcpy(str1, "Hello", 4);
-        strlcpy(str2, "Hello", 4);
+        ft_test_strlcpy(str2, "Hello", 4);
         if (strcmp(str1, str2) != 0) {
             printf("\nFail: ft_strlcpy content mismatch for size 4\n");
             printf("\nExpected: '%s'\n", str2);
@@ -477,8 +477,8 @@ static void test_strlcat(void)
 
         ft_strlcpy(str1, "Hello", 50);
         ft_strlcat(str1, " World", 50);
-        strlcpy(str2, "Hello", 50);
-        strlcat(str2, " World", 50);
+        ft_test_strlcpy(str2, "Hello", 50);
+        ft_test_strlcat(str2, " World", 50);
         success &= (strcmp(str1, str2) == 0);
 
         if (!success)
@@ -613,8 +613,8 @@ static void test_strnstr(void)
 {
     TEST("ft_strnstr", {
         int success = 1;
-        success &= (ft_strnstr("Hello, world", "world", 20) == strnstr("Hello, world", "world", 20));
-        success &= (ft_strnstr("Hello, world", "world", 5) == strnstr("Hello, world", "world", 5));
+        success &= (ft_strnstr("Hello, world", "world", 20) == ft_test_strnstr("Hello, world", "world", 20));
+        success &= (ft_strnstr("Hello, world", "world", 5) == ft_test_strnstr("Hello, world", "world", 5));
 
         if (!success)
         {

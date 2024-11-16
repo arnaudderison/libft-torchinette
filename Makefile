@@ -15,6 +15,7 @@ SRCS = main.c \
        test_calloc.c \
        test_strdup.c \
        test_striteri.c \
+	   utils.c \
        test_ft_fd.c
 
 SRCS := $(addprefix $(SRC_DIR)/, $(SRCS))
@@ -67,12 +68,12 @@ $(LIBFT):
 
 $(NAME): $(OBJS) $(LIBFT)
 	@echo "$(YELLOW)Compilation du testeur...$(RESET)"
-	$(CC) $(OBJS) -L. -lft -o $(NAME)
+	@$(CC) $(OBJS) -L. -lft -o $(NAME)
 	@echo "$(GREEN)Testeur compilé avec succès!$(RESET)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	$(CC) $(INCLUDES) -c $< -o $@
 
 clean:
 	@echo "$(YELLOW)Nettoyage des fichiers objets...$(RESET)"
