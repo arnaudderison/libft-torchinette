@@ -24,6 +24,7 @@ static void test_isalpha(void)
         {
             printf("%s[KO]%s\n", RED, RESET);
             g_results.failed++;
+            return ;
         }
     });
 }
@@ -53,6 +54,7 @@ static void test_isdigit(void)
         {
             printf("%s[KO]%s\n", RED, RESET);
             g_results.failed++;
+            return ;
         }
     });
 }
@@ -79,6 +81,7 @@ static void test_isalnum(void)
         {
             printf("%s[KO]%s\n", RED, RESET);
             g_results.failed++;
+            return ;
         }
     });
 }
@@ -95,6 +98,7 @@ static void test_isascii(void)
         {
             printf("%s[KO]%s\n", RED, RESET);
             g_results.failed++;
+            return ;
         }
     });
 }
@@ -111,6 +115,7 @@ static void test_isprint(void)
         {
             printf("%s[KO]%s\n", RED, RESET);
             g_results.failed++;
+            return ;
         }
     });
 }
@@ -126,6 +131,7 @@ static void test_strlen(void)
         {
             printf("%s[KO]%s\n", RED, RESET);
             g_results.failed++;
+            return ;
         }
     });
 }
@@ -455,6 +461,7 @@ static void test_strlcpy(void)
         {
             printf("\n%s[KO]%s\n", RED, RESET);
             g_results.failed++;
+            return ;
         }
     });
 }
@@ -478,6 +485,7 @@ static void test_strlcat(void)
         {
             printf("%s[KO]%s\n", RED, RESET);
             g_results.failed++;
+            return ;
         }
     });
 }
@@ -495,6 +503,7 @@ static void test_toupper(void)
         {
             printf("%s[KO]%s\n", RED, RESET);
             g_results.failed++;
+            return ;
         }
     });
 }
@@ -512,6 +521,7 @@ static void test_tolower(void)
         {
             printf("%s[KO]%s\n", RED, RESET);
             g_results.failed++;
+            return ;
         }
     });
 }
@@ -528,6 +538,7 @@ static void test_strchr(void)
         {
             printf("%s[KO]%s\n", RED, RESET);
             g_results.failed++;
+            return ;
         }
     });
 }
@@ -544,6 +555,7 @@ static void test_strrchr(void)
         {
             printf("%s[KO]%s\n", RED, RESET);
             g_results.failed++;
+            return ;
         }
     });
 }
@@ -560,6 +572,7 @@ static void test_strncmp(void)
         {
             printf("%s[KO]%s\n", RED, RESET);
             g_results.failed++;
+            return ;
         }
     });
 }
@@ -575,6 +588,7 @@ static void test_memchr(void)
         {
             printf("%s[KO]%s\n", RED, RESET);
             g_results.failed++;
+            return ;
         }
     });
 }
@@ -590,6 +604,7 @@ static void test_memcmp(void)
         {
             printf("%s[KO]%s\n", RED, RESET);
             g_results.failed++;
+            return ;
         }
     });
 }
@@ -605,6 +620,7 @@ static void test_strnstr(void)
         {
             printf("%s[KO]%s\n", RED, RESET);
             g_results.failed++;
+            return ;
         }
     });
 }

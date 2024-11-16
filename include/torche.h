@@ -6,7 +6,7 @@
 /*   By: aderison <aderison@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 12:07:19 by aderison          #+#    #+#             */
-/*   Updated: 2024/11/15 21:18:38 by aderison         ###   ########.fr       */
+/*   Updated: 2024/11/16 16:21:27 by aderison         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <setjmp.h>
 # include <unistd.h>
 # include "libft.h"
+#include <fcntl.h>
 
 // Codes couleur
 # define RED     "\033[31m"
@@ -62,5 +63,7 @@ void    test_bzero(void);
 void    print_results(void);
 void    test_calloc(void);
 void    test_strdup(void);
-
+void    test_part2(void);
+void    test_striteri(void);
+void    test_ft_fd();
 #endif

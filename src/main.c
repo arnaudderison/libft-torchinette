@@ -24,6 +24,9 @@ int main(int argc, char **argv)
     test_calloc();
     test_strdup();
     test_part1();
+    test_part2();
+    test_striteri();
+    test_ft_fd();
     print_results();
 
     return (g_results.failed > 0);
