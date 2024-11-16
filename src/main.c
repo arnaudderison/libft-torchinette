@@ -1,5 +1,14 @@
 #include "torche.h"
 
+void    clear_terminal(void)
+{
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
+
 int main(int argc, char **argv)
 {
     (void)argv;

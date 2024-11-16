@@ -6,38 +6,35 @@
 /*   By: aderison <aderison@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 12:07:19 by aderison          #+#    #+#             */
-/*   Updated: 2024/11/16 16:39:09 by aderison         ###   ########.fr       */
+/*   Updated: 2024/11/16 17:13:40 by aderison         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TORCHE_H
-#define TORCHE_H
+# define TORCHE_H
 
 # include <stdio.h>
-# include <limits.h>
 # include <stdlib.h>
 # include <string.h>
 # include <ctype.h>
 # include <signal.h>
 # include <setjmp.h>
 # include <unistd.h>
+# include <fcntl.h>
 # include "libft.h"
-#include <fcntl.h>
 
-#ifdef _WIN32
-    #include <windows.h>
-#else
-    #include <unistd.h>
-#endif
+/* Headers communs pour Mac et Linux */
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <limits.h>
 
-// Codes couleur
-# define RED     "\033[31m"
-# define GREEN   "\033[32m"
-# define YELLOW  "\033[33m"
-# define BLUE    "\033[34m"
+# define RED "\033[31m"
+# define GREEN "\033[32m"
+# define YELLOW "\033[33m"
+# define BLUE "\033[34m"
 # define MAGENTA "\033[35m"
-# define CYAN    "\033[36m"
-# define RESET   "\033[0m"
+# define CYAN "\033[36m"
+# define RESET "\033[0m"
 
 typedef struct s_test_results {
     int passed;
@@ -56,21 +53,12 @@ extern const char *g_current_test;
     printf("%sTesting %s %s ", BLUE, name, RESET); \
     if (sigsetjmp(g_jump_buffer, 1) == 0) { \
         code; \
-        printf("%s[OK]%s\n ", GREEN, RESET); \
+        printf("%s[OK]%s\n", GREEN, RESET); \
         g_results.passed++; \
     } \
 } while(0)
 
-void    clear_terminal(void)
-{
-    #ifdef _WIN32
-        system("cls");
-    #else
-        system("clear");
-    #endif
-}
-
-// Prototypes
+/* Prototypes */
 int     setup_signal_handlers(void);
 void    test_part1(void);
 void    test_atoi(void);
@@ -80,5 +68,7 @@ void    test_calloc(void);
 void    test_strdup(void);
 void    test_part2(void);
 void    test_striteri(void);
-void    test_ft_fd();
+void    test_ft_fd(void);
+void    clear_terminal(void);
+
 #endif
