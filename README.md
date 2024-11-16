@@ -163,7 +163,7 @@ If you find a bug, please create a detailed issue including:
 This project is under free license.
 
 ## ✨ Author
-- [@aderison](https://github.com/aderison) - Creator and maintainer
+- [@aderison](https://github.com/arnaudderison/libft-torchinette) - Creator and maintainer
 
 ## 🙏 Acknowledgments
 - To the 42 community for their support
