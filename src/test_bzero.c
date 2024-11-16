@@ -6,7 +6,7 @@
 /*   By: aderison <aderison@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 13:10:28 by aderison          #+#    #+#             */
-/*   Updated: 2024/11/15 13:19:22 by aderison         ###   ########.fr       */
+/*   Updated: 2024/11/16 20:42:55 by aderison         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,46 @@ static void test_bzero_large(void)
     free(ptr2);
 }
 
+static void overflow_bzero(void)
+{
+    TEST("ft_bzero - size_t vs int test", {
+        int success = 1;
+        
+        size_t size = (size_t)INT_MAX + 50;
+        char *str = malloc(size);
+        if (!str)
+        {
+            printf("%s[MALLOC ERROR]%s\n", RED, RESET);
+            g_results.failed++;
+            return;
+        }
+        memset(str, 'A', size);
+
+        ft_bzero(str, size);
+
+        for (size_t i = 0; i < size; i++)
+        {
+            if (str[i] != 0)
+            {
+                success = 0;
+                break;
+            }
+        }
+
+        free(str);
+
+        if (!success)
+        {
+            printf("%s[KO]%s\n", RED, RESET);
+            printf("Erreur : La mémoire n'a pas été correctement mise à zéro\n");
+            printf("Cela peut être dû à l'utilisation de int au lieu de size_t\n");
+            g_results.failed++;
+            return;
+        }
+        g_results.passed++;
+    });
+}
+
 void test_bzero(void)
 {
     printf("\n%s=== Tests détaillés de ft_bzero ===%s\n", YELLOW, RESET);
@@ -214,4 +254,5 @@ void test_bzero(void)
     test_bzero_aligned();      // Test alignement mémoire
     test_bzero_overlap();      // Test chevauchement
     test_bzero_large();        // Test grande allocation
+    overflow_bzero();
 }

@@ -6,7 +6,7 @@
 /*   By: aderison <aderison@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 13:22:15 by aderison          #+#    #+#             */
-/*   Updated: 2024/11/15 13:24:09 by aderison         ###   ########.fr       */
+/*   Updated: 2024/11/16 20:49:14 by aderison         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,19 +73,15 @@ static void test_calloc_basic(void)
 static void test_calloc_zero(void)
 {
     TEST("ft_calloc (zero size)",
-        // Test avec count = 0
         void *ptr1 = ft_calloc(0, sizeof(int));
         void *ptr2 = calloc(0, sizeof(int));
         
-        // Test avec size = 0
         void *ptr3 = ft_calloc(5, 0);
         void *ptr4 = calloc(5, 0);
         
-        // Test avec les deux = 0
         void *ptr5 = ft_calloc(0, 0);
         void *ptr6 = calloc(0, 0);
 
-        // Comparaison du comportement avec le vrai calloc
         if ((ptr1 == NULL) != (ptr2 == NULL))
         {
             printf("%s[KO]%s ft_calloc(0, sizeof(int)) behavior mismatch\n", 
@@ -117,7 +113,6 @@ static void test_calloc_zero(void)
 static void test_calloc_large(void)
 {
     TEST("ft_calloc (large allocation)",
-        // Test avec une allocation assez grande mais valide
         size_t count = 1024;
         size_t size = 1024;
         void *ptr1 = ft_calloc(count, size);
@@ -154,11 +149,9 @@ static void test_calloc_overflow(void)
         void *ptr1 = ft_calloc(SIZE_MAX, SIZE_MAX);
         void *ptr2 = calloc(SIZE_MAX, SIZE_MAX);
         
-        // Test avec des valeurs qui provoqueront un overflow
         void *ptr3 = ft_calloc(SIZE_MAX, 2);
         void *ptr4 = calloc(SIZE_MAX, 2);
         
-        // Les deux devraient retourner NULL
         if (ptr1 != NULL || ptr3 != NULL)
         {
             printf("%s[KO]%s ft_calloc didn't protect against overflow\n", 
@@ -166,7 +159,6 @@ static void test_calloc_overflow(void)
             g_results.failed++;
         }
 
-        // Vérification de la cohérence avec le vrai calloc
         if ((ptr1 == NULL) != (ptr2 == NULL) || 
             (ptr3 == NULL) != (ptr4 == NULL))
         {
@@ -185,13 +177,11 @@ static void test_calloc_overflow(void)
 static void test_calloc_alignment(void)
 {
     TEST("ft_calloc (memory alignment)",
-        // Test d'alignement pour différents types
         void *ptr1 = ft_calloc(1, sizeof(char));
         void *ptr2 = ft_calloc(1, sizeof(int));
         void *ptr3 = ft_calloc(1, sizeof(long));
         void *ptr4 = ft_calloc(1, sizeof(double));
 
-        // Vérification de l'alignement
         if (((uintptr_t)ptr1 & (sizeof(char) - 1)) != 0 ||
             ((uintptr_t)ptr2 & (sizeof(int) - 1)) != 0 ||
             ((uintptr_t)ptr3 & (sizeof(long) - 1)) != 0 ||
@@ -259,17 +249,15 @@ static void test_calloc_stress(void)
             return;
         }
 
-        // Faire de nombreuses allocations
         while (i < num_allocations)
         {
-            size_t size = (i % 100) + 1;  // Tailles variées
+            size_t size = (i % 100) + 1; 
             ptrs[i] = ft_calloc(size, sizeof(int));
             
             if (!ptrs[i] || !is_memory_zero(ptrs[i], size * sizeof(int)))
             {
                 printf("%s[KO]%s ft_calloc failed in stress test at i=%zu\n",
                     RED, RESET, i);
-                // Libérer la mémoire allouée jusqu'ici
                 while (i > 0)
                     free(ptrs[--i]);
                 free(ptrs);
@@ -278,8 +266,6 @@ static void test_calloc_stress(void)
             }
             i++;
         }
-
-        // Libérer toute la mémoire
         i = 0;
         while (i < num_allocations)
             free(ptrs[i++]);
@@ -287,15 +273,44 @@ static void test_calloc_stress(void)
     );
 }
 
+
+static void test_overflow_calloc()
+{
+    TEST("ft_calloc - int overflow test", {
+        int success = 1;
+        
+        size_t test_size = (size_t)INT_MAX + 50;
+        char *ptr = ft_calloc(1, test_size);
+        for (size_t i = 0; i < test_size; i++)
+        {
+            if (ptr[i] != 0)
+            {
+                success = 0;
+                break;
+            }
+        }
+        free(ptr);
+        if (!success)
+        {
+            printf("%s[KO]%s\n", RED, RESET);
+            printf("Erreur : ft_calloc a échoué avec size > INT_MAX\n");
+            printf("Probablement dû à l'utilisation de int au lieu de size_t\n");
+            g_results.failed++;
+            return;
+        }
+        g_results.passed++;
+    });
+}
 void test_calloc(void)
 {
     printf("\n%s=== Tests détaillés de ft_calloc ===%s\n", YELLOW, RESET);
     
-    test_calloc_basic();         // Tests basiques
-    test_calloc_zero();          // Tests avec zéro
-    test_calloc_large();         // Grandes allocations
-    test_calloc_overflow();      // Protection contre les overflows
-    test_calloc_alignment();     // Alignement mémoire
-    test_calloc_various_sizes(); // Différentes tailles
-    test_calloc_stress();        // Test de stress
+    test_calloc_basic();
+    test_calloc_zero();
+    test_calloc_large();
+    test_calloc_overflow();
+    test_calloc_alignment();
+    test_calloc_various_sizes();
+    test_calloc_stress();
+    test_overflow_calloc();
 }

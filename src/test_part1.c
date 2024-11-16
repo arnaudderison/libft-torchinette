@@ -134,6 +134,61 @@ static void test_strlen(void)
             return ;
         }
     });
+
+    TEST("ft_strlen - long string", {
+        int success = 1;
+        
+        // Create a long string
+        char *long_str = malloc(1000001);
+        if (!long_str)
+        {
+            printf("%s[MALLOC ERROR]%s\n", RED, RESET);
+            g_results.failed++;
+            return;
+        }
+        memset(long_str, 'a', 1000000);
+        long_str[1000000] = '\0';
+        
+        success &= (ft_strlen(long_str) == strlen(long_str));
+        free(long_str);
+        
+        if (!success)
+        {
+            printf("%s[KO]%s\n", RED, RESET);
+            g_results.failed++;
+            return;
+        }
+        g_results.passed++;
+    });
+
+    TEST("ft_strlen - INT_MAX overflow test", {
+        int success = 1;
+        
+        // Créer une chaîne juste au-dessus de INT_MAX
+        char *str = malloc((size_t)INT_MAX + 3);
+        if (!str)
+        {
+            printf("%s[MALLOC ERROR]%s\n", RED, RESET);
+            g_results.failed++;
+            return;
+        }
+
+        // Test avec une taille juste au-dessus de INT_MAX
+        size_t test_size = (size_t)INT_MAX + 1;
+        memset(str, 'a', test_size);
+        str[test_size] = '\0';
+        success &= (ft_strlen(str) == strlen(str));
+
+        free(str);
+
+        if (!success)
+        {
+            printf("%s[KO]%s\n", RED, RESET);
+            printf("Erreur détectée : votre ft_strlen utilise probablement un int au lieu de size_t\n");
+            g_results.failed++;
+            return;
+        }
+    });
 }
 
 static void test_memset(void)
@@ -143,7 +198,6 @@ static void test_memset(void)
         char str2[50];
         int success = 1;
         
-        // Test avec 'A' sur les 10 premiers octets
         ft_memset(str1, 'A', 10);
         memset(str2, 'A', 10);
         if (memcmp(str1, str2, 10) != 0) {
@@ -153,7 +207,6 @@ static void test_memset(void)
             success = 0;
         }
 
-        // Test avec 0 sur les 10 premiers octets
         ft_memset(str1, 0, 10);
         memset(str2, 0, 10);
         if (memcmp(str1, str2, 10) != 0) {
@@ -163,7 +216,6 @@ static void test_memset(void)
             success = 0;
         }
 
-        // Test avec une valeur limite (255) sur les 10 premiers octets
         ft_memset(str1, 255, 10);
         memset(str2, 255, 10);
         if (memcmp(str1, str2, 10) != 0) {
@@ -176,7 +228,6 @@ static void test_memset(void)
             success = 0;
         }
 
-        // Test avec une valeur limite (127) sur les 10 premiers octets
         ft_memset(str1, 127, 10);
         memset(str2, 127, 10);
         if (memcmp(str1, str2, 10) != 0) {
@@ -189,7 +240,6 @@ static void test_memset(void)
             success = 0;
         }
 
-        // Test avec remplissage d'une chaîne déjà remplie avec une autre valeur
         ft_memset(str1, 'B', 10);
         memset(str2, 'B', 10);
         if (memcmp(str1, str2, 10) != 0) {
@@ -199,7 +249,6 @@ static void test_memset(void)
             success = 0;
         }
 
-        // Test avec un n plus grand que la taille de la chaîne
         ft_memset(str1, 'A', 50);
         memset(str2, 'A', 50);
         if (memcmp(str1, str2, 50) != 0) {
@@ -209,7 +258,6 @@ static void test_memset(void)
             success = 0;
         }
 
-        // Test avec un n partiel, remplissage des 5 premiers octets sur une chaîne de 10
         ft_memset(str1, 'C', 5);
         memset(str2, 'C', 5);
         if (memcmp(str1, str2, 5) != 0) {
@@ -219,7 +267,6 @@ static void test_memset(void)
             success = 0;
         }
 
-        // Test avec un n égal à la taille de la chaîne (50)
         ft_memset(str1, 'Z', 50);
         memset(str2, 'Z', 50);
         if (memcmp(str1, str2, 50) != 0) {
@@ -229,7 +276,6 @@ static void test_memset(void)
             success = 0;
         }
 
-        // Test avec n = 0, aucune modification de la chaîne
         ft_memset(str1, 'X', 0);
         memset(str2, 'X', 0);
         if (memcmp(str1, str2, 50) != 0) {
@@ -239,9 +285,8 @@ static void test_memset(void)
             success = 0;
         }
 
-        // Vérifier que le reste de la chaîne après le remplissage partiel reste inchangé
-        ft_memset(str1, 'A', 10);  // Remplir les 10 premiers octets
-        ft_memset(str1 + 20, 'B', 10);  // Remplir les 10 octets après le 20ème
+        ft_memset(str1, 'A', 10);
+        ft_memset(str1 + 20, 'B', 10);
         memset(str2, 'A', 10);
         memset(str2 + 20, 'B', 10);
         if (memcmp(str1, str2, 50) != 0) {
@@ -254,11 +299,42 @@ static void test_memset(void)
             success = 0;
         }
 
-        // Résultat du test
         if (!success)
         {
             printf("%s[KO]%s\n", RED, RESET);
             g_results.failed++;
+        }
+    });
+
+    TEST("ft_memset - size_t vs int test", {
+        size_t size = (size_t)INT_MAX + 100;
+        char *str = malloc(size);
+        if (!str)
+        {
+            printf("%s[MALLOC ERROR]%s\n", RED, RESET);
+            g_results.failed++;
+            return;
+        }
+
+        ft_memset(str, 'A', size);
+
+        int success = 1;
+        for (size_t i = 0; i < size; i++)
+        {
+            if (str[i] != 'A')
+            {
+                success = 0;
+                break;
+            }
+        }
+
+        free(str);
+        if (!success)
+        {
+            printf("%s[KO]%s\n", RED, RESET);
+            printf("Erreur : memset n'a pas rempli après INT_MAX\n");
+            g_results.failed++;
+            return;
         }
     });
 }
@@ -281,9 +357,8 @@ static void test_memcpy(void)
             success = 0;
         }
 
-        // Test avec n = 0, aucune donnée ne doit être copiée
         memset(str1, 0, 50);
-        memset(str2, 0, 50);  // Initialiser str2 à zéro
+        memset(str2, 0, 50);
         ft_memcpy(str1, "Hello", 0);
         if (memcmp(str1, str2, 50) != 0) {
             printf("\nFail: ft_memcpy('Hello', 0)");
@@ -295,36 +370,33 @@ static void test_memcpy(void)
             success = 0;
         }
 
-        // Test avec des données différentes
         memset(str1, 0, 50);
         memset(str2, 0, 50);
         ft_memcpy(str1, "Hello", 6);
         memcpy(str2, "World", 6);
-        if (memcmp(str1, str2, 6) == 0) {  // Les chaînes ne doivent pas être identiques
+        if (memcmp(str1, str2, 6) == 0) {
             printf("\nFail: ft_memcpy with different strings");
             printf("\nExpected: %s", str2);
             printf("\nGot:      %s", str1);
             success = 0;
         }
 
-        // Test avec n > taille de destination (ex : 50)
         memset(str1, 0, 50);
         memset(str2, 0, 50);
-        ft_memcpy(str1, "Hello", 50);  // Copie plus de données que la taille du tableau
+        ft_memcpy(str1, "Hello", 50);
         memcpy(str2, "Hello", 50);
-        if (memcmp(str1, str2, 50) != 0) {  // La fonction ne doit pas provoquer de dépassement mémoire
+        if (memcmp(str1, str2, 50) != 0) {
             printf("\nFail: ft_memcpy(n > 50)");
             printf("\nExpected: %s", str1);
             printf("\nGot: %s", str2);
             success = 0;
         }
 
-        // Tester avec des caractères spéciaux : '\0' et 0xFF
         memset(str1, 0, 50);
         memset(str2, 0, 50);
         ft_memcpy(str1, "\0\0\0\0", 4);
         memcpy(str2, "\0\0\0\0", 4);
-        if (memcmp(str1, str2, 4) != 0) {  // Doit être égal même si \0 est présent
+        if (memcmp(str1, str2, 4) != 0) {
             printf("\nFail: ft_memcpy with special characters ('\\0')");
             printf("\nExpected: ");
             for (int i = 0; i < 4; i++) printf("%c", str2[i]);
@@ -333,35 +405,62 @@ static void test_memcpy(void)
             success = 0;
         }
 
-        // Tester avec des copies partielles (n < longueur de la chaîne)
         memset(str1, 0, 50);
         memset(str2, 0, 50);
-        ft_memcpy(str1, "HelloWorld", 5);  // Copie seulement "Hello"
+        ft_memcpy(str1, "HelloWorld", 5); 
         memcpy(str2, "HelloWorld", 5);
-        if (memcmp(str1, str2, 5) != 0) {  // Les premiers 5 caractères doivent être égaux
+        if (memcmp(str1, str2, 5) != 0) {
             printf("\nFail: ft_memcpy partial copy ('Hello')");
             printf("\nExpected: %s", str2);
             printf("\nGot:      %s", str1);
             success = 0;
         }
 
-        // Test avec chevauchement de mémoire (cas non défini pour memcpy mais utile pour voir l'effet)
-        ft_memcpy(str1, "HelloWorld", 5);  // Copier "Hello" dans str1
-        ft_memcpy(str1 + 2, str1, 5);  // Copier "Hello" à partir de str1[2]
+        ft_memcpy(str1, "HelloWorld", 5);
+        ft_memcpy(str1 + 2, str1, 5);
         memcpy(str2, "HelloWorld", 5);
         memcpy(str2 + 2, str2, 5);
-        if (memcmp(str1, str2, 5) == 0) {  // Ce test peut échouer si la fonction ne gère pas les chevauchements
+        if (memcmp(str1, str2, 5) == 0) {
             printf("\nFail: ft_memcpy with overlap");
             printf("\nExpected: HeHelloWorld");
             printf("\nGot:      %s", str1);
             success = 0;
         }
 
-        // Résultat global du test
         if (!success)
         {
             printf("%s[KO]%s ft_memcpy\n", RED, RESET);
             g_results.failed++;
+        }
+    });
+
+    TEST("ft_memcpy - size_t vs int test", {
+        size_t size = (size_t)INT_MAX + 100;
+        char *src = malloc(size);
+        char *dst = malloc(size);
+        if (!src || !dst)
+        {
+            free(src);
+            free(dst);
+            printf("%s[MALLOC ERROR]%s\n", RED, RESET);
+            g_results.failed++;
+            return;
+        }
+
+        memset(src, 'B', size);
+        
+        ft_memcpy(dst, src, size);
+
+        int success = (memcmp(src, dst, size) == 0);
+
+        free(src);
+        free(dst);
+        if (!success)
+        {
+            printf("%s[KO]%s\n", RED, RESET);
+            printf("Erreur : memcpy n'a pas copié après INT_MAX\n");
+            g_results.failed++;
+            return;
         }
     });
 }
@@ -385,6 +484,40 @@ static void test_memmove(void)
         {
             printf("%s[KO]%s\n", RED, RESET);
             g_results.failed++;
+        }
+    });
+
+    TEST("ft_memmove - size_t vs int test", {
+        size_t size = (size_t)INT_MAX + 100;
+        char *buffer = malloc(size * 2);
+        if (!buffer)
+        {
+            printf("%s[MALLOC ERROR]%s\n", RED, RESET);
+            g_results.failed++;
+            return;
+        }
+
+        memset(buffer, 'C', size);
+        
+        ft_memmove(buffer + 1, buffer, size - 1);
+
+        int success = 1;
+        for (size_t i = 1; i < size; i++)
+        {
+            if (buffer[i] != 'C')
+            {
+                success = 0;
+                break;
+            }
+        }
+
+        free(buffer);
+        if (!success)
+        {
+            printf("%s[KO]%s\n", RED, RESET);
+            printf("Erreur : memmove n'a pas déplacé après INT_MAX\n");
+            g_results.failed++;
+            return;
         }
     });
 }
@@ -464,6 +597,40 @@ static void test_strlcpy(void)
             return ;
         }
     });
+
+    TEST("ft_strlcpy - size_t vs int test", {
+        size_t size = (size_t)INT_MAX + 20;
+        char *src = malloc(size + 1);
+        char *dst = malloc(size + 1);
+        if (!src || !dst)
+        {
+            free(src);
+            free(dst);
+            printf("%s[MALLOC ERROR]%s\n", RED, RESET);
+            g_results.failed++;
+            return;
+        }
+
+        memset(src, 'A', size);
+        src[(size_t)INT_MAX + 1] = 'B';
+        src[size] = '\0';
+
+        size_t result = ft_strlcpy(dst, src, size + 1);
+        
+        int success = (result == size) && (dst[(size_t)INT_MAX + 1] == 'B');
+        
+        free(src);
+        free(dst);
+
+        if (!success)
+        {
+            printf("%s[KO]%s\n", RED, RESET);
+            printf("ft_strlcpy n'a pas copié correctement après INT_MAX\n");
+            g_results.failed++;
+            return;
+        }
+
+    });
 }
 
 
@@ -487,6 +654,44 @@ static void test_strlcat(void)
             g_results.failed++;
             return ;
         }
+    });
+
+    TEST("ft_strlcat - size_t vs int test", {
+        size_t size = (size_t)INT_MAX + 50;
+        char *dst = malloc(size + 1);
+        char *src = malloc(2);
+        if (!dst || !src)
+        {
+            free(dst);
+            free(src);
+            printf("%s[MALLOC ERROR]%s\n", RED, RESET);
+            g_results.failed++;
+            return;
+        }
+
+        // Préparer les chaînes
+        memset(dst, 'A', size - 1);
+        dst[size - 1] = '\0';
+        src[0] = 'B';
+        src[1] = '\0';
+
+        // Concaténer
+        size_t result = ft_strlcat(dst, src, size + 1);
+        
+        int success = (result == size) && (dst[size - 1] == 'B');
+        
+        free(dst);
+        free(src);
+
+        if (!success)
+        {
+            printf("%s[KO]%s\n", RED, RESET);
+            printf("ft_strlcat n'a pas géré correctement la taille > INT_MAX\n");
+            g_results.failed++;
+            return;
+        }
+        printf("%s[OK]%s\n", GREEN, RESET);
+        g_results.passed++;
     });
 }
 
@@ -541,6 +746,34 @@ static void test_strchr(void)
             return ;
         }
     });
+
+    TEST("ft_strchr - size_t vs int test", {
+        size_t size = (size_t)INT_MAX + 42;
+        char *str = malloc(size + 1);
+        if (!str)
+        {
+            printf("%s[MALLOC ERROR]%s\n", RED, RESET);
+            g_results.failed++;
+            return;
+        }
+
+        memset(str, 'A', size);
+        str[(size_t)INT_MAX + 1] = 'B';
+        str[size] = '\0';
+
+        char *result = ft_strchr(str, 'B');
+        
+        free(str);
+
+        if (!result || *result != 'B')
+        {
+            printf("%s[KO]%s\n", RED, RESET);
+            printf("ft_strchr n'a pas trouvé le caractère après INT_MAX\n");
+            printf("Probablement dû à l'utilisation de int au lieu de size_t\n");
+            g_results.failed++;
+            return;
+        }
+    });
 }
 
 static void test_strrchr(void)
@@ -591,6 +824,65 @@ static void test_memchr(void)
             return ;
         }
     });
+
+     TEST("ft_memchr - size_t vs int test", {
+        size_t size = (size_t)INT_MAX + 100;
+        size_t target_pos = (size_t)INT_MAX + 42;
+        unsigned char *str = malloc(size);
+        if (!str)
+        {
+            printf("%s[MALLOC ERROR]%s\n", RED, RESET);
+            g_results.failed++;
+            return;
+        }
+
+        memset(str, 'A', size);
+        
+        str[target_pos] = 'B';
+
+        void *result = ft_memchr(str, 'B', size);
+        
+        if (result != (str + target_pos))
+        {
+            printf("%s[KO]%s\n", RED, RESET);
+            printf("Erreur : ft_memchr n'a pas trouvé le caractère après INT_MAX\n");
+            printf("Probablement dû à l'utilisation de int au lieu de size_t\n");
+            free(str);
+            g_results.failed++;
+            return;
+        }
+
+        free(str);
+    });
+
+    TEST("ft_memchr - NULL byte test after INT_MAX", {
+        size_t size = (size_t)INT_MAX + 100;
+        size_t target_pos = (size_t)INT_MAX + 50;
+        unsigned char *str = malloc(size);
+        if (!str)
+        {
+            printf("%s[MALLOC ERROR]%s\n", RED, RESET);
+            g_results.failed++;
+            return;
+        }
+
+        memset(str, 'A', size);
+        
+        str[target_pos] = '\0';
+
+        void *result = ft_memchr(str, '\0', size);
+        
+        if (result != (str + target_pos))
+        {
+            printf("%s[KO]%s\n", RED, RESET);
+            printf("Erreur : ft_memchr n'a pas trouvé le \\0 après INT_MAX\n");
+            free(str);
+            g_results.failed++;
+            return;
+        }
+
+        free(str);
+    });
 }
 
 static void test_memcmp(void)
@@ -605,6 +897,40 @@ static void test_memcmp(void)
             printf("%s[KO]%s\n", RED, RESET);
             g_results.failed++;
             return ;
+        }
+    });
+
+    TEST("ft_memcmp - size_t vs int test", {
+        size_t size = (size_t)INT_MAX + 1000;
+        char *s1 = malloc(size);
+        char *s2 = malloc(size);
+        if (!s1 || !s2)
+        {
+            free(s1);
+            free(s2);
+            printf("%s[MALLOC ERROR]%s\n", RED, RESET);
+            g_results.failed++;
+            return;
+        }
+
+        memset(s1, 'D', size);
+        memset(s2, 'D', size);
+        
+        size_t target_pos = (size_t)INT_MAX + 42;
+        s2[target_pos] = 'E';
+
+        int result = ft_memcmp(s1, s2, size);
+        int expected = memcmp(s1, s2, size);
+
+        free(s1);
+        free(s2);
+        
+        if ((result < 0 && expected >= 0) || (result >= 0 && expected < 0))
+        {
+            printf("%s[KO]%s\n", RED, RESET);
+            printf("Erreur : memcmp n'a pas détecté la différence après INT_MAX\n");
+            g_results.failed++;
+            return;
         }
     });
 }

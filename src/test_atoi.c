@@ -6,7 +6,7 @@
 /*   By: aderison <aderison@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 12:58:16 by aderison          #+#    #+#             */
-/*   Updated: 2024/11/15 20:21:25 by aderison         ###   ########.fr       */
+/*   Updated: 2024/11/16 20:37:38 by aderison         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,43 @@ static void test_atoi_mixed(void)
     );
 }
 
+static void test_atoi_len(void)
+{
+    TEST("ft_atoi - size_t vs int test", {
+        int success = 1;
+        
+        size_t str_size = (size_t)INT_MAX + 100;
+        char *str = malloc(str_size + 2); // +2 pour le - et le \0
+        if (!str)
+        {
+            printf("%s[MALLOC ERROR]%s\n", RED, RESET);
+            g_results.failed++;
+            return;
+        }
+
+        memset(str, ' ', str_size);
+        
+        str[str_size - 3] = '4';
+        str[str_size - 2] = '2';
+        str[str_size - 1] = '\0';
+
+        int result = ft_atoi(str);
+        success &= (result == 42);
+
+        free(str);
+
+        if (!success)
+        {
+            printf("%s[KO]%s\n", RED, RESET);
+            printf("Erreur : le nombre n'a pas été correctement converti\n");
+            g_results.failed++;
+            return;
+        }
+        printf("%s[OK]%s\n", GREEN, RESET);
+        g_results.passed++;
+    });
+}
+
 void test_atoi(void)
 {
     printf("\n%s=== Tests détaillés de ft_atoi ===%s\n", YELLOW, RESET);
@@ -205,4 +242,5 @@ void test_atoi(void)
     test_atoi_zero();
     test_atoi_long_numbers();
     test_atoi_mixed();
+    test_atoi_len();
 }

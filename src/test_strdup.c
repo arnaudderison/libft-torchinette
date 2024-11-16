@@ -6,7 +6,7 @@
 /*   By: aderison <aderison@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 13:29:07 by aderison          #+#    #+#             */
-/*   Updated: 2024/11/15 13:29:25 by aderison         ###   ########.fr       */
+/*   Updated: 2024/11/16 20:50:54 by aderison         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,45 @@ static void test_strdup_long_string(void)
         free(dup);
         free(orig);
     );
+
+    TEST("ft_strdup - size_t vs int test", {
+        size_t size = (size_t)INT_MAX + 42;
+        char *str = malloc(size + 1);
+        if (!str)
+        {
+            printf("%s[MALLOC ERROR]%s\n", RED, RESET);
+            g_results.failed++;
+            return;
+        }
+
+        memset(str, 'A', size);
+        str[(size_t)INT_MAX + 20] = 'B';
+        str[size] = '\0';
+
+        char *dup = ft_strdup(str);
+        
+        if (!dup)
+        {
+            printf("%s[KO]%s\n", RED, RESET);
+            printf("ft_strdup a retourné NULL\n");
+            free(str);
+            g_results.failed++;
+            return;
+        }
+        int success = (dup[(size_t)INT_MAX + 20] == 'B');
+
+        free(str);
+        free(dup);
+
+        if (!success)
+        {
+            printf("%s[KO]%s\n", RED, RESET);
+            printf("ft_strdup n'a pas copié correctement après INT_MAX\n");
+            printf("Probablement dû à l'utilisation de int au lieu de size_t\n");
+            g_results.failed++;
+            return;
+        }
+    });
 }
 
 // Test de la gestion mémoire

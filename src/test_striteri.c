@@ -158,6 +158,34 @@ static void test_ft_striteri(void)
             return;
         }
     );
+
+    TEST("ft_striteri - size_t vs int test", {
+        size_t size = (size_t)INT_MAX + 20;
+        char *str = malloc(size + 1);
+        if (!str)
+        {
+            printf("%s[MALLOC ERROR]%s\n", RED, RESET);
+            g_results.failed++;
+            return;
+        }
+
+        memset(str, 'a', size);
+        str[size] = '\0';
+
+        ft_striteri(str, f_to_upper);
+
+        int success = (str[(size_t)INT_MAX + 10] == 'A');
+        
+        free(str);
+
+        if (!success)
+        {
+            printf("%s[KO]%s\n", RED, RESET);
+            printf("ft_striteri n'a pas modifié le caractère après INT_MAX\n");
+            g_results.failed++;
+            return;
+        }
+    });
 }
 
 void test_striteri(void)
