@@ -6,7 +6,7 @@
 /*   By: aderison <aderison@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 12:07:19 by aderison          #+#    #+#             */
-/*   Updated: 2024/11/16 16:21:27 by aderison         ###   ########.fr       */
+/*   Updated: 2024/11/16 16:39:09 by aderison         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@
 # include <unistd.h>
 # include "libft.h"
 #include <fcntl.h>
+
+#ifdef _WIN32
+    #include <windows.h>
+#else
+    #include <unistd.h>
+#endif
 
 // Codes couleur
 # define RED     "\033[31m"
@@ -54,6 +60,15 @@ extern const char *g_current_test;
         g_results.passed++; \
     } \
 } while(0)
+
+void    clear_terminal(void)
+{
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
 
 // Prototypes
 int     setup_signal_handlers(void);

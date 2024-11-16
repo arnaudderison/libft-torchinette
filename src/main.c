@@ -10,7 +10,7 @@ int main(int argc, char **argv)
             RED, RESET);
         return (1);
     }
-
+    clear_terminal();
     printf("%s=== LA TORCHINETTE - LIBFT (aderison) ===%s\n", MAGENTA, RESET);
 
     if (argc > 1)
