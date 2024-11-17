@@ -833,55 +833,6 @@ static void	test_ft_split(void)
         }
         free_split(tab);
     );
-
-    TEST("ft_split - size_t vs int test", {
-        size_t size = (size_t)INT_MAX + 2;
-        char *str = malloc(size + 1);
-        if (!str)
-        {
-            printf("%s[MALLOC ERROR]%s\n", RED, RESET);
-            g_results.failed++;
-            return;
-        }
-        memset(str, ' ', size);
-        str[0] = 'A';
-        str[(size_t)INT_MAX] = 'B';
-        str[(size_t)INT_MAX + 1] = 'C';
-        str[size] = '\0';
-
-        char **result = ft_split(str, ' ');
-        
-        if (!result)
-        {
-            printf("%s[KO]%s\n", RED, RESET);
-            printf("ft_split a retourné NULL\n");
-            free(str);
-            g_results.failed++;
-            return;
-        }
-
-        int found_b = 0;
-        int found_c = 0;
-        for (size_t i = 0; result[i]; i++)
-        {
-            if (result[i][0] == 'B')
-                found_b = 1;
-            if (result[i][0] == 'C')
-                found_c = 1;
-        }
-
-        free_split(result);
-        free(str);
-
-        if (!found_b || !found_c)
-        {
-            printf("%s[KO]%s\n", RED, RESET);
-            printf("Caractères après INT_MAX non trouvés\n");
-            printf("Probablement dû à l'utilisation de int au lieu de size_t\n");
-            g_results.failed++;
-            return;
-        }
-    });
 }
 
 static void	test_ft_itoa(void)

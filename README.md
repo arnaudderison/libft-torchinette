@@ -8,7 +8,9 @@ Torchinette is a tester for libft, designed to thoroughly verify each function i
 ### Prerequisites
 - GCC
 - Make
+- Norminette
 - Your libft must be in a folder named `libft` at the project root
+- All mandatory libft files must be present
 
 ### Installation Steps
 1. Clone the repository:
@@ -28,24 +30,36 @@ cp -r [PATH_TO_YOUR_LIBFT] ./libft
 
 ## 🚀 Usage
 
-### Compilation
-To compile the project:
+### Compilation and Testing
+To compile and run all tests:
 ```bash
 make
 ```
-
-### Running Tests
-To run all tests:
-```bash
-./torchinette
-```
+This will:
+1. Check for all required libft files
+2. Compile the libft if all files are present
+3. Compile the tester
+4. Run all tests automatically
 
 ### Available Make Commands
-- `make` : Compiles the project
+- `make` : Checks files, compiles the project and runs tests
+- `make check_files` : Verifies the presence of all required libft files
+- `make libft` : Compiles only the libft
+- `make norm` : Checks the norminette for libft
 - `make clean` : Removes object files
 - `make fclean` : Removes object files and executable
 - `make re` : Fully recompiles the project
-- `make test` : Compiles and runs tests
+- `make help` : Displays all available commands
+
+## 📋 Required Files
+The following files must be present in your libft folder:
+```
+ft_atoi.c     ft_isascii.c   ft_memchr.c    ft_strchr.c    ft_strnstr.c
+ft_bzero.c    ft_isdigit.c   ft_memcmp.c    ft_strdup.c    ft_strrchr.c
+ft_calloc.c   ft_isprint.c   ft_memcpy.c    ft_strlcat.c   ft_tolower.c
+ft_isalnum.c  ft_memset.c    ft_memmove.c   ft_strlcpy.c   ft_toupper.c
+ft_isalpha.c  ft_strlen.c    ft_strncmp.c   libft.h
+```
 
 ## 📋 Tested Functions
 
@@ -171,3 +185,5 @@ This project is under free license.
 
 ---
 *"Let Torchinette light your way to a perfect libft!"* 🔥
+
+

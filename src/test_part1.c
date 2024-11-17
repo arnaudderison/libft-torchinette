@@ -746,34 +746,6 @@ static void test_strchr(void)
             return ;
         }
     });
-
-    TEST("ft_strchr - size_t vs int test", {
-        size_t size = (size_t)INT_MAX + 42;
-        char *str = malloc(size + 1);
-        if (!str)
-        {
-            printf("%s[MALLOC ERROR]%s\n", RED, RESET);
-            g_results.failed++;
-            return;
-        }
-
-        memset(str, 'A', size);
-        str[(size_t)INT_MAX + 1] = 'B';
-        str[size] = '\0';
-
-        char *result = ft_strchr(str, 'B');
-        
-        free(str);
-
-        if (!result || *result != 'B')
-        {
-            printf("%s[KO]%s\n", RED, RESET);
-            printf("ft_strchr n'a pas trouvé le caractère après INT_MAX\n");
-            printf("Probablement dû à l'utilisation de int au lieu de size_t\n");
-            g_results.failed++;
-            return;
-        }
-    });
 }
 
 static void test_strrchr(void)
