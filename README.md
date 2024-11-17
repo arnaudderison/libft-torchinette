@@ -44,7 +44,7 @@ This will:
 ### Available Make Commands
 - `make` : Checks files, compiles the project and runs tests
 - `make check_files` : Verifies the presence of all required libft files
-- `make libft` : Compiles only the libft
+- `make libft.a` : Compiles only the libft
 - `make norm` : Checks the norminette for libft
 - `make clean` : Removes object files
 - `make fclean` : Removes object files and executable
