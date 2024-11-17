@@ -61,17 +61,13 @@ int setup_signal_handlers(void)
 {
     struct sigaction sa;
 
-    // Initialisation de la structure sigaction
     memset(&sa, 0, sizeof(sa));
     
-    // Configuration du handler
     sa.sa_sigaction = signal_handler;
-    sa.sa_flags = SA_SIGINFO;  // Pour recevoir les informations détaillées
+    sa.sa_flags = SA_SIGINFO;
     
-    // Bloquer tous les signaux pendant l'exécution du handler
     sigfillset(&sa.sa_mask);
     
-    // Installation des handlers pour différents signaux
     if (sigaction(SIGSEGV, &sa, NULL) == -1)
     {
         perror("Erreur lors de l'installation du handler SIGSEGV");
