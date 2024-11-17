@@ -138,7 +138,6 @@ static void test_strlen(void)
     TEST("ft_strlen - long string", {
         int success = 1;
         
-        // Create a long string
         char *long_str = malloc(1000001);
         if (!long_str)
         {
@@ -164,7 +163,6 @@ static void test_strlen(void)
     TEST("ft_strlen - INT_MAX overflow test", {
         int success = 1;
         
-        // Créer une chaîne juste au-dessus de INT_MAX
         char *str = malloc((size_t)INT_MAX + 3);
         if (!str)
         {
@@ -173,7 +171,6 @@ static void test_strlen(void)
             return;
         }
 
-        // Test avec une taille juste au-dessus de INT_MAX
         size_t test_size = (size_t)INT_MAX + 1;
         memset(str, 'a', test_size);
         str[test_size] = '\0';
@@ -347,7 +344,6 @@ static void test_memcpy(void)
         char str2[50];
         int success = 1;
 
-        // Test de copie basique avec 6 octets
         ft_memcpy(str1, "Hello", 6);
         memcpy(str2, "Hello", 6);
         if (memcmp(str1, str2, 6) != 0) {
@@ -529,7 +525,6 @@ static void test_strlcpy(void)
         char str1[50];
         char str2[50];
 
-        // Test 1: Copie complète avec un tampon suffisamment grand
         size_t result1 = ft_strlcpy(str1, "Hello", 50);
         size_t result2 = ft_test_strlcpy(str2, "Hello", 50);
         if (result1 != result2) {
@@ -539,7 +534,6 @@ static void test_strlcpy(void)
             success = 0;
         }
         
-        // Test 2: Copie d'une chaîne vide
         result1 = ft_strlcpy(str1, "", 50);
         result2 = ft_test_strlcpy(str2, "", 50);
         if (result1 != result2) {
@@ -548,8 +542,6 @@ static void test_strlcpy(void)
             printf("\nGot:      %zu\n", result1);
             success = 0;
         }
-
-        // Test 3: Copie avec une taille de tampon plus petite que la chaîne
         result1 = ft_strlcpy(str1, "Hello", 3);
         result2 = ft_test_strlcpy(str2, "Hello", 3);
         if (result1 != result2) {
@@ -559,7 +551,6 @@ static void test_strlcpy(void)
             success = 0;
         }
 
-        // Test 4: Vérification du contenu copié avec un tampon plus grand
         ft_strlcpy(str1, "Hello", 50);
         ft_test_strlcpy(str2, "Hello", 50);
         if (strcmp(str1, str2) != 0) {
@@ -568,8 +559,7 @@ static void test_strlcpy(void)
             printf("\nGot:      '%s'\n", str1);
             success = 0;
         }
-
-        // Test 5: Copie avec un tampon exactement de la taille de la chaîne + 1
+    
         ft_strlcpy(str1, "Hello", 6);
         ft_test_strlcpy(str2, "Hello", 6);
         if (strcmp(str1, str2) != 0) {
@@ -579,7 +569,6 @@ static void test_strlcpy(void)
             success = 0;
         }
 
-        // Test 6: Test avec un tampon plus petit que la chaîne mais avec l'allocation correcte
         ft_strlcpy(str1, "Hello", 4);
         ft_test_strlcpy(str2, "Hello", 4);
         if (strcmp(str1, str2) != 0) {
@@ -589,7 +578,6 @@ static void test_strlcpy(void)
             success = 0;
         }
 
-        // Résultat final
         if (!success)
         {
             printf("\n%s[KO]%s\n", RED, RESET);
