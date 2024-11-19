@@ -116,7 +116,7 @@ $(NAME): $(OBJ_DIR) $(OBJS) $(LIBFT) torch
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@$(CC) $(INCLUDES) -c $< -o $@
 
 clean:
 	@echo "$(YELLOW)Nettoyage des fichiers objets...$(RESET)"
