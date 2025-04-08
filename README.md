@@ -15,17 +15,17 @@ Torchinette is a tester for libft, designed to thoroughly verify each function i
 ### Installation Steps
 1. Clone the repository:
 ```bash
-git clone https://github.com/arnaudderison/libft-torchinette torchinette
+cd <PATH_TO_YOUR_LIBFT>
 ```
 
 2. Enter the directory:
 ```bash
-cd torchinette
+git clone https://github.com/arnaudderison/libft-torchinette torchinette
 ```
 
 3. Place your libft in the appropriate folder:
 ```bash
-cp -r [PATH_TO_YOUR_LIBFT] ./libft
+cd tortorchinette && make
 ```
 
 ## 🚀 Usage
