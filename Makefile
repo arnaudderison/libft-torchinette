@@ -1,6 +1,6 @@
 NAME = torchinette
 LIBFT = libft.a
-LIBFT_DIR = ./libft
+LIBFT_DIR = ../
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 INCLUDES = -I$(LIBFT_DIR) -Iinclude
@@ -44,6 +44,7 @@ check:
 	@missing_files=0; \
 	for file in $(LIBFT_FILES); do \
 		if [ ! -f $(LIBFT_DIR)/$$file ]; then \
+			echo $(LIBFT_DIR)/$$file
 			missing_files=1; \
 		fi; \
 	done; \
