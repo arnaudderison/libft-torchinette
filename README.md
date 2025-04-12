@@ -25,7 +25,7 @@ git clone https://github.com/arnaudderison/libft-torchinette torchinette
 
 3. Place your libft in the appropriate folder:
 ```bash
-cd tortorchinette && make
+cd torchinette && make
 ```
 
 ## 🚀 Usage

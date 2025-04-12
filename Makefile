@@ -44,7 +44,6 @@ check:
 	@missing_files=0; \
 	for file in $(LIBFT_FILES); do \
 		if [ ! -f $(LIBFT_DIR)/$$file ]; then \
-			echo $(LIBFT_DIR)/$$file
 			missing_files=1; \
 		fi; \
 	done; \
