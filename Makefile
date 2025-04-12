@@ -8,7 +8,7 @@ SRC_DIR = src
 OBJ_DIR = obj
 LIBFT_FILES = 	ft_isalnum.c ft_isprint.c ft_memcmp.c  ft_putchar_fd.c ft_split.c \
 				ft_strlcat.c ft_strncmp.c ft_substr.c ft_atoi.c ft_isalpha.c \
-				ft_itoa.c ft_memcpy.c  ft_putendl_fd.c ft_strchr.c  ft_strlcpy.c \
+				ft_itoa.c ft_putendl_fd.c ft_strchr.c  ft_strlcpy.c \
 				ft_strnstr.c ft_tolower.c ft_bzero.c   ft_isascii.c ft_memcpy.c \
 				ft_memmove.c ft_putnbr_fd.c  ft_strdup.c  ft_strlen.c  ft_strrchr.c \
 				ft_toupper.c ft_calloc.c  ft_isdigit.c ft_memchr.c  ft_memset.c  \
@@ -44,14 +44,15 @@ check:
 	@missing_files=0; \
 	for file in $(LIBFT_FILES); do \
 		if [ ! -f $(LIBFT_DIR)/$$file ]; then \
+			echo "$(RED)❌ Fichier manquant : $(LIBFT_DIR)/$$file$(RESET)"; \
 			missing_files=1; \
 		fi; \
 	done; \
 	if [ $$missing_files -eq 1 ]; then \
-		echo "$(RED)⚠️  Erreur : Certains fichiers sont manquants dans libft !$(RESET)"; \
-		echo "$(RED)❌ Compilation impossible$(RESET)"; \
+		echo "$(RED)⚠️  Compilation annulée à cause de fichiers manquants.$(RESET)"; \
 		exit 1; \
 	fi
+
 
 # Règle pour compiler uniquement la libft
 libft: $(LIBFT)
