@@ -150,7 +150,6 @@ A new educational mode will be added to:
 ### Long Term (6+ months)
 - [ ] Multilingual support
 - [ ] Customizable tests
-- [ ] CI/CD integration
 
 ## 💡 Community Suggestions
 We're open to your suggestions! Here are some currently under consideration:
