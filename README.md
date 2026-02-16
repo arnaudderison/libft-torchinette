@@ -1,5 +1,7 @@
 # 🔥 Torchinette
 
+> ⚠️ **This project is no longer maintained.**
+
 ## Description
 Torchinette is a tester for libft, designed to thoroughly verify each function in your library. With its user-friendly interface and detailed tests, Torchinette helps you validate your libft implementation.
 
